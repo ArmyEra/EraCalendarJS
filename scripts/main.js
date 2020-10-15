@@ -52,9 +52,10 @@ function mainInvoke() { "use strict";
     resize();
     spriteSheet.image.addEventListener("load", function(event){
         window.requestAnimationFrame(loop);
+        musik_test();
     });
 
-    spriteSheet.image.src = "resources/testSheet.png";
+    spriteSheet.image.src = "resources/images/testSheet.png";
 };
 
 mainInvoke();
