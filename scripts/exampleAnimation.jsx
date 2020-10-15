@@ -157,8 +157,8 @@
     buffer.canvas.height = 40;
 
     window.addEventListener("resize", resize);
-    window.addEventListener("keydown", controller.keyUpDown);
-    window.addEventListener("keyup", controller.keyUpDown);
+    // window.addEventListener("keydown", controller.keyUpDown);
+    // window.addEventListener("keyup", controller.keyUpDown);
 
     resize();
     spriteSheet.image.addEventListener("load", function(event){
