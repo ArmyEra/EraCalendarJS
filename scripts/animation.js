@@ -1,4 +1,5 @@
-(function() { "use strict";    
+
+(function() { "use strict";
     
     const SPRITE_SIZE = 128;
     const FRAMES_COUNT = 4;
@@ -148,6 +149,16 @@
     resize();
     spriteSheet.image.addEventListener("load", function(event){
         window.requestAnimationFrame(loop);
+
+
+        musik_test();
+
+
+
+
+
+
+
     });
 
     spriteSheet.image.src = "resources/testSheet.png";
