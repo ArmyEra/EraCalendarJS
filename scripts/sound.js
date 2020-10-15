@@ -18,7 +18,7 @@
 
         function  soundClick()
         {
-            scr = "sound.mp3";
+            scr = "resources/sounds/sound.mp3";
             var audio2 = new Audio(scr);
             audio2.play();
         }

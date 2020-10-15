@@ -1,0 +1,2 @@
+const SPRITE_SIZE = 128;
+const FRAMES_COUNT = 4;
