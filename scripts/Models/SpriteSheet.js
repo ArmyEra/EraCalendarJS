@@ -10,4 +10,8 @@ class SpriteSheet{
         this.frameSet = frameSet;
         this.image = new Image();
     }
+
+    static CreateDefault(){
+        return new SpriteSheet(Range(FRAMES_COUNT_TOTAL));
+    }
 }

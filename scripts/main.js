@@ -1,18 +1,57 @@
-function mainInvoke() { "use strict";    
-    var buffer, display, loop, render, resize;
+function mainInvoke() { 
+    "use strict";    
+    
+    var buffer, imagesLoaded = 0;
+    var display, loop, render, resize, onImageLoaded;
+
+    var numericSpriteSheets = Range(10, 0, (index) => SpriteSheet.CreateDefault());
+    var pointSpriteSheet = SpriteSheet.CreateDefault();
+    var doublePointsSheet = SpriteSheet.CreateDefault();
+    var rectangleSpriteSheet = SpriteSheet.CreateDefault();
+
+    var rectangleObject = new ImageObject(
+        new Position([0, 0]),
+        1282, 258,
+        [rectangleSpriteSheet]
+    );
+    var fistPointObject = new ImageObject(
+        new Position([0, 0]),
+        130, 130,
+        [pointSpriteSheet]
+    )
+    var secondPointObject = new ImageObject(
+        new Position([0, 0]),
+        130, 130,
+        [pointSpriteSheet]
+    )
+
+    var timeValue = new TimeValue(
+        new Position([0, 0]), 
+        SPRITE_SIZE, SPRITE_SIZE,
+        numericSpriteSheets, doublePointsSheet);
+
+    // var doublePointsObject = new ImageObject(
+    //     new Position([0, 0]),
+    //     130, 130,
+    //     [doublePointsSheet]
+    // )
+
+
+    var imageObjects = [rectangleObject, timeValue]//, secondPointObject, doublePointsObject];
 
     buffer = document.createElement("canvas").getContext("2d");
     display = document.querySelector("canvas").getContext("2d");
 
-    var spriteSheet = new SpriteSheet(Range(FRAMES_COUNT));
-    var imageNumbers = ImageObject.GenerateArray(
-        Range(2, 0,index => new Position([index * SPRITE_SIZE, 0])), 
-        Repeat(spriteSheet, 2));
+    // var imageNumbers = ImageObject.GenerateArray(
+    //     Range(2, 0,index => new Position([index * SPRITE_SIZE, 0])),
+    //     SPRITE_SIZE,
+    //     SPRITE_SIZE,
+    //     Repeat([pointSpriteSheet], 2));
 
     loop = function(time_stamp){
-        imageNumbers.forEach(imageNumber => {
-            imageNumber.change(10);
-            imageNumber.update();
+        imageObjects.forEach(imageObject => {
+            imageObject.change(FRAME_RATE);
+            imageObject.update();
         });
 
         render();
@@ -25,8 +64,8 @@ function mainInvoke() { "use strict";
         buffer.fillRect(0, 0, buffer.canvas.width, buffer.canvas.height);
         
         //Draw numbers ar canvas
-        imageNumbers.forEach((player) => {
-            buffer.drawImage(spriteSheet.image, player.animation.frame * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE, Math.floor(player.x), Math.floor(player.y), SPRITE_SIZE, SPRITE_SIZE); 
+        imageObjects.forEach((imageObject) => {
+            imageObject.bufferize(buffer);
         })
 
         //Draw canvas at window
@@ -42,20 +81,36 @@ function mainInvoke() { "use strict";
         display.imageSmoothingEnabled = false;
     }
 
+    onImageLoaded = function(event){
+        if(++imagesLoaded == TOTAL_IMAGES){
+            window.requestAnimationFrame(loop);
+            //musik_test();
+        }
+    }
+
     //Initialize
 
-    buffer.canvas.width = 360;
-    buffer.canvas.height = 180;
+    buffer.canvas.width = 1920;
+    buffer.canvas.height = 1080;
 
     window.addEventListener("resize", resize);
-
     resize();
-    spriteSheet.image.addEventListener("load", function(event){
-        window.requestAnimationFrame(loop);
-        musik_test();
-    });
 
-    spriteSheet.image.src = "resources/images/testSheet.png";
+    pointSpriteSheet.image.addEventListener("load", onImageLoaded);
+    doublePointsSheet.image.addEventListener("load", onImageLoaded);
+    rectangleSpriteSheet.image.addEventListener("load", onImageLoaded);
+    numericSpriteSheets.forEach(sheet => {
+        sheet.image.addEventListener("load", onImageLoaded);    
+    });
+    
+    pointSpriteSheet.image.src = "resources/images/signes/point.png";
+    doublePointsSheet.image.src = "resources/images/signes/doublePoints.png";
+    rectangleSpriteSheet.image.src = "resources/images/rectangle.png";
+
+    for(var i =0; i < numericSpriteSheets.length; i++)
+        numericSpriteSheets[i].image.src = `resources/images/numbers/${i}.png`;
+
+    var musicPlayer = new Music();
 };
 
 mainInvoke();
