@@ -1,8 +1,8 @@
 function mainInvoke() { 
     "use strict";    
     
-    var buffer, imagesLoaded = 0;
-    var display, loop, render, resize, onImageLoaded;
+    var display, buffer, imagesLoaded = 0;
+    var loop, render, resize, onImageLoaded;
 
     var numericSpriteSheets = Range(10, 0, (index) => SpriteSheet.CreateDefault());
     var pointSpriteSheet = SpriteSheet.CreateDefault();
@@ -10,43 +10,25 @@ function mainInvoke() {
     var rectangleSpriteSheet = SpriteSheet.CreateDefault();
 
     var rectangleObject = new ImageObject(
-        new Position([0, 0]),
+        new Position([319, 188]),
         1282, 258,
         [rectangleSpriteSheet]
     );
-    var fistPointObject = new ImageObject(
-        new Position([0, 0]),
-        130, 130,
-        [pointSpriteSheet]
-    )
-    var secondPointObject = new ImageObject(
-        new Position([0, 0]),
-        130, 130,
-        [pointSpriteSheet]
-    )
+
+    var dateValue = new DateValue(
+        new Position([325, 188+64]), 
+        SPRITE_SIZE, SPRITE_SIZE,
+        numericSpriteSheets, pointSpriteSheet);
 
     var timeValue = new TimeValue(
-        new Position([0, 0]), 
+        new Position([641.5, 634]), 
         SPRITE_SIZE, SPRITE_SIZE,
         numericSpriteSheets, doublePointsSheet);
 
-    // var doublePointsObject = new ImageObject(
-    //     new Position([0, 0]),
-    //     130, 130,
-    //     [doublePointsSheet]
-    // )
-
-
-    var imageObjects = [rectangleObject, timeValue]//, secondPointObject, doublePointsObject];
+    var imageObjects = [rectangleObject, dateValue, timeValue]//, secondPointObject, doublePointsObject];
 
     buffer = document.createElement("canvas").getContext("2d");
     display = document.querySelector("canvas").getContext("2d");
-
-    // var imageNumbers = ImageObject.GenerateArray(
-    //     Range(2, 0,index => new Position([index * SPRITE_SIZE, 0])),
-    //     SPRITE_SIZE,
-    //     SPRITE_SIZE,
-    //     Repeat([pointSpriteSheet], 2));
 
     loop = function(time_stamp){
         imageObjects.forEach(imageObject => {
@@ -73,9 +55,9 @@ function mainInvoke() {
     }
 
     resize = function(){
-        display.canvas.width = document.documentElement.clientWidth - 32;
-        if(display.canvas.width > document.documentElement.clientHeight)
-            display.canvas.width = document.documentElement.clientHeight;
+        display.canvas.width = document.documentElement.clientWidth;
+        // if(display.canvas.width > document.documentElement.clientHeight)
+        //     display.canvas.width = document.documentElement.clientHeight;
         
         display.canvas.height = display.canvas.width * 0.5;
         display.imageSmoothingEnabled = false;
@@ -84,7 +66,7 @@ function mainInvoke() {
     onImageLoaded = function(event){
         if(++imagesLoaded == TOTAL_IMAGES){
             window.requestAnimationFrame(loop);
-            //musik_test();
+            new Music();
         }
     }
 
@@ -110,7 +92,7 @@ function mainInvoke() {
     for(var i =0; i < numericSpriteSheets.length; i++)
         numericSpriteSheets[i].image.src = `resources/images/numbers/${i}.png`;
 
-    var musicPlayer = new Music();
+    
 };
 
 mainInvoke();
