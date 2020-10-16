@@ -1,5 +1,6 @@
 class Music{
     constructor(){
+        window.addEventListener("mouseup", this.onMouseClick.bind(this));
         setTimeout(this.soundClick.bind(this), MILISECONDS_IN_SECOND);
     }
 
@@ -9,7 +10,7 @@ class Music{
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
 
-        today = mm + '_' + dd + '_' + yyyy;
+        today = `${dd}_${mm}_${yyyy}`;
         return today;
     }
 
@@ -21,6 +22,13 @@ class Music{
          var scr = "resources/sounds/" + name_file + ".wav";
          var audio2 = new Audio(scr);
          audio2.play();
-        setTimeout(this.soundClick.bind(this), SECONDS_IN_HOUR * MILISECONDS_IN_SECOND);
+        //setTimeout(this.soundClick.bind(this), SECONDS_IN_HOUR * MILISECONDS_IN_SECOND);
+    }
+
+    onMouseClick(e){
+        if(e.button != 1)//central
+            return;
+
+        this.soundClick();
     }
 }

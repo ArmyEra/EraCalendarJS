@@ -42,3 +42,15 @@ Date.prototype.addYears = function(years) {
     date.setFullYear(date.getFullYear() + years);
     return date;
 }
+
+Date.prototype.addHours = function(hours) {
+    var date = new Date(this.valueOf());
+    date.setHours(date.getHours() + hours);
+    return date;
+}
+
+Date.prototype.addMinutes = function(minutes) {
+    var date = new Date(this.valueOf());
+    date.setMinutes(date.getMinutes() + minutes);
+    return date;
+}

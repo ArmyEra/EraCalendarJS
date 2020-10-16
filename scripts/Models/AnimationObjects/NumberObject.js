@@ -1,9 +1,10 @@
 class NumberObject extends ImageObject{
-    constructor(scrollControllers, position, width, height, spriteSheets, sheetIndex = 0){
+    constructor(scrollControllers, container, position, width, height, spriteSheets, sheetIndex = 0){
         super(position, width, height, spriteSheets, sheetIndex);
         
         this.mouse = scrollControllers.mouse;
         this.locker = scrollControllers.locker;
+        this.container = container;
 
         window.addEventListener("mousewheel", this.onScrollDetected.bind(this));
     }
@@ -20,6 +21,7 @@ class NumberObject extends ImageObject{
             return;
 
         let sign = Math.sign(e.wheelDelta);
-        this.shift = ClampValue(this.shift + sign, this.spriteSheets.length);    
+        this.shift +=sign;
+        this.container.updateIndex();
     }
 }

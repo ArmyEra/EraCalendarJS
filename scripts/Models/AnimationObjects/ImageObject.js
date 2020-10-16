@@ -25,12 +25,8 @@ class ImageObject{
             && minPos.y <= mousePosition.y && mousePosition.y <= maxPos.y;
     }
 
-    get SpriteSheetIndex(){
-        return ClampValue(this.shift + this.sheetIndex, this.spriteSheets.length);
-    }
-
     change(delay = 15){
-        let index = this.SpriteSheetIndex;
+        let index = this.sheetIndex;
         var newFrameSet = this.spriteSheets[index].frameSet;
         this.animation.change(newFrameSet, delay);
     }    
@@ -40,7 +36,7 @@ class ImageObject{
     }
 
     bufferize(buffer){
-        let image = this.spriteSheets[this.SpriteSheetIndex].image;
+        let image = this.spriteSheets[this.sheetIndex].image;
         buffer.drawImage(image, 0, this.animation.frame * this.height, this.width, this.height, 
             Math.floor(this.position.x), Math.floor(this.position.y), this.width, this.height); 
     }    

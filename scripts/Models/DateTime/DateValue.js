@@ -7,13 +7,13 @@ class DateValue{
         
         var invokeDelay = SECONDS_IN_MINUTE + 1 - dateTime.getSeconds();
 
-        this.firstDay = new NumberObject(scrollControllers,
+        this.firstDay = new NumberObject(scrollControllers, this,
             startPosition, 
             width, height,
             numericSpriteSheets.slice(0, 4), 
             Math.floor(days / 10));
 
-        this.secondDay = new NumberObject(scrollControllers,
+        this.secondDay = new NumberObject(scrollControllers, this,
             new Position([startPosition.x + width, startPosition.y]),
             width, height,
             numericSpriteSheets,
@@ -25,13 +25,13 @@ class DateValue{
         //     [pointSpriteSheet]
         // )
 
-        this.firstMonth = new NumberObject(scrollControllers,
+        this.firstMonth = new NumberObject(scrollControllers, this,
             new Position([startPosition.x + (2 * width + 10), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 2), 
             Math.floor(months / 10));
 
-        this.secondMonth = new NumberObject(scrollControllers,
+        this.secondMonth = new NumberObject(scrollControllers, this,
             new Position([startPosition.x + (3 * width + 10), startPosition.y]), 
             width, height,
             numericSpriteSheets,
@@ -43,19 +43,19 @@ class DateValue{
         //     [pointSpriteSheet]
         // )
 
-        this.firstYear = new NumberObject(scrollControllers,
+        this.firstYear = new NumberObject(scrollControllers, this,
             new Position([startPosition.x + (4 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 4), 
             Math.floor(years / 10) % 10);
 
-        this.secondYear = new NumberObject(scrollControllers,
+        this.secondYear = new NumberObject(scrollControllers, this,
             new Position([startPosition.x + (5 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets,
             years % 10);
     
-        setTimeout(this.updateIndex.bind(this), invokeDelay * MILISECONDS_IN_SECOND);
+        setTimeout(this.updateIndex.bind(this, true), invokeDelay * MILISECONDS_IN_SECOND);
     }
 
     get imageObjects(){
@@ -63,6 +63,14 @@ class DateValue{
              this.firstDay, this.secondDay, 
              this.firstMonth, this.secondMonth,
             this.firstYear, this.secondYear];//, this.thirdYear, this.fourthYear];
+    }
+
+    get DateShifts(){
+        return {
+            days: this.firstDay.shift * 10 + this.secondDay.shift,
+            months : this.firstMonth.shift * 10 + this.secondMonth.shift,
+            years : this.firstYear.shift *10 + this.secondYear.shift
+        }
     }
 
     change(delay = 15){
@@ -82,8 +90,13 @@ class DateValue{
         })
     }
 
-    updateIndex(){
-        var dateTime = new Date();
+    updateIndex(callTimeout = false){
+        var dateShifts = this.DateShifts;
+
+        var dateTime = new Date()
+            .addDays(dateShifts.days)
+            .addMonths(dateShifts.months)
+            .addYears(dateShifts.years);
 
         var days = dateTime.getDate();
         var months = dateTime.getMonth() + 1;

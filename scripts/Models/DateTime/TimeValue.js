@@ -5,12 +5,12 @@ class TimeValue{
         var minutes = dateTime.getMinutes();
         var invokeDelay = SECONDS_IN_MINUTE + 1 - dateTime.getSeconds();
 
-        this.firstHour = new NumberObject(scrollControllers,
+        this.firstHour = new NumberObject(scrollControllers, this,
             startPosition, 
             width, height,
             numericSpriteSheets.slice(0, 3), 
             Math.floor(hours / 10));
-        this.secondHour = new NumberObject(scrollControllers,
+        this.secondHour = new NumberObject(scrollControllers, this,
             new Position([startPosition.x + width, startPosition.y]),
             width, height,
             numericSpriteSheets,
@@ -22,25 +22,32 @@ class TimeValue{
         //     [doublePointsSheet]
         // )
 
-        this.firstMinute = new NumberObject(scrollControllers,
+        this.firstMinute = new NumberObject(scrollControllers, this,
             new Position([startPosition.x + (2 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 6), 
             Math.floor(minutes / 10));
 
-        this.secondMinute = new NumberObject(scrollControllers,
+        this.secondMinute = new NumberObject(scrollControllers, this,
             new Position([startPosition.x + (3 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets,
             minutes % 10);
 
-        setTimeout(this.updateIndex.bind(this), invokeDelay * MILISECONDS_IN_SECOND);
+        setTimeout(this.updateIndex.bind(this, true), invokeDelay * MILISECONDS_IN_SECOND);
     }
 
     get imageObjects(){
         return [//this.doublePoint, 
             this.firstHour, this.secondHour, 
             this.firstMinute, this.secondMinute];
+    }
+
+    get TimeShifts(){
+        return {
+            hours: this.firstHour.shift * 10 + this.secondHour.shift,
+            minutes : this.firstMinute.shift * 10 + this.secondMinute.shift
+        }
     }
 
     change(delay = 15){
@@ -60,10 +67,12 @@ class TimeValue{
         })
     }
 
-    updateIndex(){
-        console.log("Called!");
+    updateIndex(callTimeout = false){
+        let timeShifts = this.TimeShifts;
 
-        var dateTime = new Date();
+        var dateTime = new Date()
+            .addHours(timeShifts.hours)
+            .addMinutes(timeShifts.minutes);
         var hours = dateTime.getHours();
         var minutes = dateTime.getMinutes();
 
@@ -72,6 +81,7 @@ class TimeValue{
         this.firstMinute.updateIndex(Math.floor(minutes / 10));
         this.secondMinute.updateIndex(minutes % 10);
 
-        setTimeout(this.updateIndex.bind(this), SECONDS_IN_MINUTE * MILISECONDS_IN_SECOND);
+        if(callTimeout)
+            setTimeout(this.updateIndex.bind(this), SECONDS_IN_MINUTE * MILISECONDS_IN_SECOND);
     }
 }

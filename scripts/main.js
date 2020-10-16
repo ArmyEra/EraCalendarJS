@@ -4,7 +4,7 @@ function mainInvoke() {
     let display, buffer, imagesLoaded = 0;
     let loop, render, resize, onImageLoaded;
 
-    let mouseController, lockerController;
+    let mouseController, lockerController, musicController;
     
     let scrollControllers;
 
@@ -15,11 +15,11 @@ function mainInvoke() {
     let doublePointsSheet = SpriteSheet.CreateDefault();
     let rectangleSpriteSheet = SpriteSheet.CreateDefault();
 
-    // let rectangleObject = new ImageObject(
-    //     new Position([80, 54]),
-    //     640, 160,
-    //     [rectangleSpriteSheet]
-    // );
+    let rectangleObject = new ImageObject(
+        new Position([80, 54]),
+        642, 482,
+        [rectangleSpriteSheet]
+    );
 
     //let imageObjects = [rectangleObject, dateValue, timeValue]//, secondPointObject, doublePointsObject];
     
@@ -57,7 +57,7 @@ function mainInvoke() {
     onImageLoaded = function(event){
         if(++imagesLoaded == TOTAL_IMAGES){
             window.requestAnimationFrame(loop);
-            //new Music();
+            musicController = new Music();
         }
     }
 

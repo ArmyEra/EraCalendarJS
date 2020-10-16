@@ -45,7 +45,7 @@ class Locker{
     }
 
     onMouseClick(e){
-        if(e.button != 0)
+        if(e.button != 0)//left
             return;
         
         if(!this.mouseOnMe(this.mouse.position))
