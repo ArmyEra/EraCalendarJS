@@ -15,10 +15,12 @@ class Music{
 
     soundClick()
     {
-        console.log(this.getDate());
-        // scr = "resources/sounds/sound.mp3";
-        // var audio2 = new Audio(scr);
-        // audio2.play();
+         var name_file = this.getDate();
+         name_file = String(name_file);
+         console.log(name_file);
+         var scr = "resources/sounds/" + name_file + ".wav";
+         var audio2 = new Audio(scr);
+         audio2.play();
         setTimeout(this.soundClick.bind(this), SECONDS_IN_HOUR * MILISECONDS_IN_SECOND);
     }
 }
