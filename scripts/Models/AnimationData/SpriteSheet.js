@@ -2,7 +2,12 @@ class Position{
     constructor(options){
         this.x = options[0],
         this.y = options[1]
-    }   
+    }
+
+    update(newX, newY){
+        this.x = newX;
+        this.y = newY;
+    }
 }
 
 class SpriteSheet{

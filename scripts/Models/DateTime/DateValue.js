@@ -1,5 +1,5 @@
 class DateValue{
-    constructor(startPosition, width, height, numericSpriteSheets){//, pointSpriteSheet){
+    constructor(scrollControllers, startPosition, width, height, numericSpriteSheets){//, pointSpriteSheet){
         var dateTime = new Date();
         var days = dateTime.getDate();
         var months = dateTime.getMonth() + 1;
@@ -7,13 +7,13 @@ class DateValue{
         
         var invokeDelay = SECONDS_IN_MINUTE + 1 - dateTime.getSeconds();
 
-        this.firstDay = new NumberObject(
+        this.firstDay = new NumberObject(scrollControllers,
             startPosition, 
             width, height,
             numericSpriteSheets.slice(0, 4), 
             Math.floor(days / 10));
 
-        this.secondDay = new NumberObject(
+        this.secondDay = new NumberObject(scrollControllers,
             new Position([startPosition.x + width, startPosition.y]),
             width, height,
             numericSpriteSheets,
@@ -25,13 +25,13 @@ class DateValue{
         //     [pointSpriteSheet]
         // )
 
-        this.firstMonth = new NumberObject(
+        this.firstMonth = new NumberObject(scrollControllers,
             new Position([startPosition.x + (2 * width + 10), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 2), 
             Math.floor(months / 10));
 
-        this.secondMonth = new NumberObject(
+        this.secondMonth = new NumberObject(scrollControllers,
             new Position([startPosition.x + (3 * width + 10), startPosition.y]), 
             width, height,
             numericSpriteSheets,
@@ -43,13 +43,13 @@ class DateValue{
         //     [pointSpriteSheet]
         // )
 
-        this.firstYear = new NumberObject(
+        this.firstYear = new NumberObject(scrollControllers,
             new Position([startPosition.x + (4 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 4), 
             Math.floor(years / 10) % 10);
 
-        this.secondYear = new NumberObject(
+        this.secondYear = new NumberObject(scrollControllers,
             new Position([startPosition.x + (5 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets,
@@ -83,7 +83,7 @@ class DateValue{
     }
 
     updateIndex(){
-        console.log("Called!");
+        var dateTime = new Date();
 
         var days = dateTime.getDate();
         var months = dateTime.getMonth() + 1;

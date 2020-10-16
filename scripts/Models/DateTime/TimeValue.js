@@ -1,16 +1,16 @@
 class TimeValue{
-    constructor(startPosition, width, height, numericSpriteSheets){//, doublePointsSheet){
+    constructor(scrollControllers, startPosition, width, height, numericSpriteSheets){//, doublePointsSheet){
         var dateTime = new Date();
         var hours = dateTime.getHours();
         var minutes = dateTime.getMinutes();
         var invokeDelay = SECONDS_IN_MINUTE + 1 - dateTime.getSeconds();
 
-        this.firstHour = new NumberObject(
+        this.firstHour = new NumberObject(scrollControllers,
             startPosition, 
             width, height,
             numericSpriteSheets.slice(0, 3), 
             Math.floor(hours / 10));
-        this.secondHour = new NumberObject(
+        this.secondHour = new NumberObject(scrollControllers,
             new Position([startPosition.x + width, startPosition.y]),
             width, height,
             numericSpriteSheets,
@@ -22,13 +22,13 @@ class TimeValue{
         //     [doublePointsSheet]
         // )
 
-        this.firstMinute = new NumberObject(
+        this.firstMinute = new NumberObject(scrollControllers,
             new Position([startPosition.x + (2 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 6), 
             Math.floor(minutes / 10));
 
-        this.secondMinute = new NumberObject(
+        this.secondMinute = new NumberObject(scrollControllers,
             new Position([startPosition.x + (3 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets,
