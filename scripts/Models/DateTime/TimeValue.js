@@ -1,5 +1,5 @@
 class TimeValue{
-    constructor(scrollControllers, startPosition, width, height, numericSpriteSheets){//, doublePointsSheet){
+    constructor(scrollControllers, startPosition, width, height, numericSpriteSheets, pointSpriteSheet){
         var dateTime = new Date();
         var hours = dateTime.getHours();
         var minutes = dateTime.getMinutes();
@@ -16,20 +16,26 @@ class TimeValue{
             numericSpriteSheets,
             hours % 10);
 
-        // this.doublePoint = new ImageObject(
-        //     new Position([startPosition.x + (1.9 * width), startPosition.y]),
-        //     width, height,
-        //     [doublePointsSheet]
-        // )
+        this.firstPoint = new ImageObject(
+            new Position([startPosition.x + (2 * width + 2), startPosition.y]),
+            42, 42,
+            [pointSpriteSheet]
+        )
+        
+        this.secondPoint = new ImageObject(
+            new Position([startPosition.x + (2 * width + 2), startPosition.y+38]),
+            42, 42,
+            [pointSpriteSheet]
+        )
 
         this.firstMinute = new NumberObject(scrollControllers, this,
-            new Position([startPosition.x + (2 * width + 20), startPosition.y]), 
+            new Position([startPosition.x + (2.5 * width), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 6), 
             Math.floor(minutes / 10));
 
         this.secondMinute = new NumberObject(scrollControllers, this,
-            new Position([startPosition.x + (3 * width + 20), startPosition.y]), 
+            new Position([startPosition.x + (3.5 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets,
             minutes % 10);
@@ -38,7 +44,7 @@ class TimeValue{
     }
 
     get imageObjects(){
-        return [//this.doublePoint, 
+        return [this.firstPoint, this.secondPoint,
             this.firstHour, this.secondHour, 
             this.firstMinute, this.secondMinute];
     }

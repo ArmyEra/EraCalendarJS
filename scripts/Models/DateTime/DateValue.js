@@ -1,5 +1,5 @@
 class DateValue{
-    constructor(scrollControllers, startPosition, width, height, numericSpriteSheets){//, pointSpriteSheet){
+    constructor(scrollControllers, startPosition, width, height, numericSpriteSheets, pointSpriteSheet){
         var dateTime = new Date();
         var days = dateTime.getDate();
         var months = dateTime.getMonth() + 1;
@@ -19,38 +19,38 @@ class DateValue{
             numericSpriteSheets,
             days % 10);
 
-        // this.firstPoint = new ImageObject(
-        //     new Position([startPosition.x + (1.85 * width), startPosition.y]),
-        //     width, height,
-        //     [pointSpriteSheet]
-        // )
+        this.firstPoint = new ImageObject(
+            new Position([startPosition.x + (2 * width + 2), startPosition.y+38]),
+            42, 42,
+            [pointSpriteSheet]
+        )
 
         this.firstMonth = new NumberObject(scrollControllers, this,
-            new Position([startPosition.x + (2 * width + 10), startPosition.y]), 
+            new Position([startPosition.x + (2.5 * width), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 2), 
             Math.floor(months / 10));
 
         this.secondMonth = new NumberObject(scrollControllers, this,
-            new Position([startPosition.x + (3 * width + 10), startPosition.y]), 
+            new Position([startPosition.x + (3.5 * width), startPosition.y]), 
             width, height,
             numericSpriteSheets,
             months % 10);
 
-        // this.secondPoint = new ImageObject(
-        //     new Position([startPosition.x + (4.7 * width), startPosition.y]),
-        //     width, height,
-        //     [pointSpriteSheet]
-        // )
+        this.secondPoint = new ImageObject(
+            new Position([startPosition.x + (4.5 * width + 2), startPosition.y+38]),
+            42, 42,
+            [pointSpriteSheet]
+        )
 
         this.firstYear = new NumberObject(scrollControllers, this,
-            new Position([startPosition.x + (4 * width + 20), startPosition.y]), 
+            new Position([startPosition.x + (5 * width), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 4), 
             Math.floor(years / 10) % 10);
 
         this.secondYear = new NumberObject(scrollControllers, this,
-            new Position([startPosition.x + (5 * width + 20), startPosition.y]), 
+            new Position([startPosition.x + (6 * width), startPosition.y]), 
             width, height,
             numericSpriteSheets,
             years % 10);
@@ -59,7 +59,7 @@ class DateValue{
     }
 
     get imageObjects(){
-        return [//this.firstPoint, this.secondPoint,
+        return [this.firstPoint, this.secondPoint,
              this.firstDay, this.secondDay, 
              this.firstMonth, this.secondMonth,
             this.firstYear, this.secondYear];//, this.thirdYear, this.fourthYear];
@@ -109,6 +109,7 @@ class DateValue{
         this.firstYear.updateIndex(Math.floor(years / 10)% 10);
         this.secondYear.updateIndex(years % 10);
 
-        setTimeout(this.updateIndex.bind(this), SECONDS_IN_MINUTE * MILISECONDS_IN_SECOND);
+        if(callTimeout)
+            setTimeout(this.updateIndex.bind(this), SECONDS_IN_MINUTE * MILISECONDS_IN_SECOND);
     }
 }

@@ -12,16 +12,8 @@ function mainInvoke() {
 
     let numericSpriteSheets = Range(10, 0, (index) => SpriteSheet.CreateDefault());
     let pointSpriteSheet = SpriteSheet.CreateDefault();
-    let doublePointsSheet = SpriteSheet.CreateDefault();
+    //let doublePointsSheet = SpriteSheet.CreateDefault();
     let rectangleSpriteSheet = SpriteSheet.CreateDefault();
-
-    let rectangleObject = new ImageObject(
-        new Position([80, 54]),
-        642, 482,
-        [rectangleSpriteSheet]
-    );
-
-    //let imageObjects = [rectangleObject, dateValue, timeValue]//, secondPointObject, doublePointsObject];
     
     loop = function(time_stamp){
         imageObjects.forEach(imageObject => {
@@ -35,7 +27,7 @@ function mainInvoke() {
 
     render = function(){
         //Draw background
-        buffer.fillStyle = "000000";
+        buffer.fillStyle = "#000000";
         buffer.fillRect(0, 0, buffer.canvas.width, buffer.canvas.height);
         
         //Draw numbers ar canvas
@@ -50,7 +42,7 @@ function mainInvoke() {
 
     resize = function(){
         display.canvas.width = document.documentElement.clientWidth;        
-        display.canvas.height = display.canvas.width * 0.5;
+        display.canvas.height = display.canvas.width * 0.75;
         display.imageSmoothingEnabled = false;
     }
 
@@ -85,29 +77,42 @@ function mainInvoke() {
         }
     };    
 
+    let rectangleObject = new ImageObject(
+        new Position([20, 107]),
+        600, 100,
+        [rectangleSpriteSheet],
+        0,
+        1.05, 1.2
+    );
+
     let dateValue = new DateValue(scrollControllers,
-        new Position([2, 100]), 
+        new Position([20+18, 107+10]), 
         SPRITE_SIZE, SPRITE_SIZE,
-        numericSpriteSheets);//, pointSpriteSheet);
+        numericSpriteSheets, pointSpriteSheet);
 
     let timeValue = new TimeValue(scrollControllers,
         new Position([104, 93*2 + 100]), 
         SPRITE_SIZE, SPRITE_SIZE,
-        numericSpriteSheets);//, doublePointsSheet);
+        numericSpriteSheets, pointSpriteSheet);
 
+    
+
+    //let imageObjects = [rectangleObject, dateValue, timeValue]//, secondPointObject, doublePointsObject];
+
+    imageObjects.push(rectangleObject);
     imageObjects.push(dateValue); 
     imageObjects.push(timeValue);
  
-    //pointSpriteSheet.image.addEventListener("load", onImageLoaded);
-    // doublePointsSheet.image.addEventListener("load", onImageLoaded);
-    // rectangleSpriteSheet.image.addEventListener("load", onImageLoaded);
+    pointSpriteSheet.image.addEventListener("load", onImageLoaded);
+    //doublePointsSheet.image.addEventListener("load", onImageLoaded);
+    rectangleSpriteSheet.image.addEventListener("load", onImageLoaded);
     numericSpriteSheets.forEach(sheet => {
         sheet.image.addEventListener("load", onImageLoaded);    
     });
     
-    //pointSpriteSheet.image.src = "resources/images/signes/point.png";
-    // doublePointsSheet.image.src = "resources/images/signes/doublePoints.png";
-    // rectangleSpriteSheet.image.src = "resources/images/rectangle.png";
+    pointSpriteSheet.image.src = "resources/images/signes/point.png";
+    //doublePointsSheet.image.src = "resources/images/signes/doublePoints.png";
+    rectangleSpriteSheet.image.src = "resources/images/rectangle.png";
     for(let i =0; i < numericSpriteSheets.length; i++)
         numericSpriteSheets[i].image.src = `resources/images/numbers/${i}.png`;
 };

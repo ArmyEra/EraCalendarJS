@@ -1,12 +1,14 @@
 class ImageObject{
-    constructor(position, width, height, spriteSheets, sheetIndex = 0){
+    constructor(position, width, height, spriteSheets, sheetIndex = 0, scaleX = 1, scaleY = 1){
         this.animation = new Animation(),
         this.spriteSheets = spriteSheets,
         this.sheetIndex = sheetIndex,
         this.shift = 0,
         this.width = width,
         this.height = height,
-        this.position = position
+        this.position = position,
+        this.scaleX = scaleX,
+        this.scaleY = scaleY
     }
 
     get MinPosition(){
@@ -37,8 +39,15 @@ class ImageObject{
 
     bufferize(buffer){
         let image = this.spriteSheets[this.sheetIndex].image;
+
+        let destWidht = this.width * this.scaleX;
+        let destHeight = this.height * this.scaleY;
+
+        let destPointX = Math.floor(this.position.x) - ((destWidht - this.width)/2);
+        let destPointY = Math.floor(this.position.y)- ((destHeight - this.height)/2);
+
         buffer.drawImage(image, 0, this.animation.frame * this.height, this.width, this.height, 
-            Math.floor(this.position.x), Math.floor(this.position.y), this.width, this.height); 
+            destPointX, destPointY, destWidht, destHeight); 
     }    
 
     static GenerateArray(positions, width, height, spriteSheetsArray){
