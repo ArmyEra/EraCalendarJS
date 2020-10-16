@@ -5,27 +5,28 @@ function mainInvoke() {
     var loop, render, resize, onImageLoaded;
 
     var numericSpriteSheets = Range(10, 0, (index) => SpriteSheet.CreateDefault());
-    var pointSpriteSheet = SpriteSheet.CreateDefault();
-    var doublePointsSheet = SpriteSheet.CreateDefault();
-    var rectangleSpriteSheet = SpriteSheet.CreateDefault();
+    // var pointSpriteSheet = SpriteSheet.CreateDefault();
+    // var doublePointsSheet = SpriteSheet.CreateDefault();
+    //var rectangleSpriteSheet = SpriteSheet.CreateDefault();
 
-    var rectangleObject = new ImageObject(
-        new Position([319, 188]),
-        1282, 258,
-        [rectangleSpriteSheet]
-    );
+    // var rectangleObject = new ImageObject(
+    //     new Position([80, 54]),
+    //     640, 160,
+    //     [rectangleSpriteSheet]
+    // );
 
     var dateValue = new DateValue(
-        new Position([325, 188+64]), 
+        new Position([2, 100]), 
         SPRITE_SIZE, SPRITE_SIZE,
-        numericSpriteSheets, pointSpriteSheet);
+        numericSpriteSheets);//, pointSpriteSheet);
 
     var timeValue = new TimeValue(
-        new Position([641.5, 634]), 
+        new Position([104, 93*2 + 100]), 
         SPRITE_SIZE, SPRITE_SIZE,
-        numericSpriteSheets, doublePointsSheet);
+        numericSpriteSheets);//, doublePointsSheet);
 
-    var imageObjects = [rectangleObject, dateValue, timeValue]//, secondPointObject, doublePointsObject];
+    //var imageObjects = [rectangleObject, dateValue, timeValue]//, secondPointObject, doublePointsObject];
+    var imageObjects = [dateValue, timeValue];
 
     buffer = document.createElement("canvas").getContext("2d");
     display = document.querySelector("canvas").getContext("2d");
@@ -72,23 +73,22 @@ function mainInvoke() {
 
     //Initialize
 
-    buffer.canvas.width = 1920;
-    buffer.canvas.height = 1080;
+    buffer.canvas.width = 640;
+    buffer.canvas.height = 480;
 
     window.addEventListener("resize", resize);
     resize();
 
-    pointSpriteSheet.image.addEventListener("load", onImageLoaded);
-    doublePointsSheet.image.addEventListener("load", onImageLoaded);
-    rectangleSpriteSheet.image.addEventListener("load", onImageLoaded);
+    // pointSpriteSheet.image.addEventListener("load", onImageLoaded);
+    // doublePointsSheet.image.addEventListener("load", onImageLoaded);
+    // rectangleSpriteSheet.image.addEventListener("load", onImageLoaded);
     numericSpriteSheets.forEach(sheet => {
         sheet.image.addEventListener("load", onImageLoaded);    
     });
     
-    pointSpriteSheet.image.src = "resources/images/signes/point.png";
-    doublePointsSheet.image.src = "resources/images/signes/doublePoints.png";
-    rectangleSpriteSheet.image.src = "resources/images/rectangle.png";
-
+    // pointSpriteSheet.image.src = "resources/images/signes/point.png";
+    // doublePointsSheet.image.src = "resources/images/signes/doublePoints.png";
+    // rectangleSpriteSheet.image.src = "resources/images/rectangle.png";
     for(var i =0; i < numericSpriteSheets.length; i++)
         numericSpriteSheets[i].image.src = `resources/images/numbers/${i}.png`;
 

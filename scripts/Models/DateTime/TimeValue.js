@@ -1,5 +1,5 @@
 class TimeValue{
-    constructor(startPosition, width, height, numericSpriteSheets, doublePointsSheet){
+    constructor(startPosition, width, height, numericSpriteSheets){//, doublePointsSheet){
         var dateTime = new Date();
         var hours = dateTime.getHours();
         var minutes = dateTime.getMinutes();
@@ -16,20 +16,20 @@ class TimeValue{
             numericSpriteSheets,
             hours % 10);
 
-        this.doublePoint = new ImageObject(
-            new Position([startPosition.x + (1.9 * width), startPosition.y]),
-            130, 130,
-            [doublePointsSheet]
-        )
+        // this.doublePoint = new ImageObject(
+        //     new Position([startPosition.x + (1.9 * width), startPosition.y]),
+        //     width, height,
+        //     [doublePointsSheet]
+        // )
 
         this.firstMinute = new NumberObject(
-            new Position([startPosition.x + (2.9 * width), startPosition.y]), 
+            new Position([startPosition.x + (2 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets.slice(0, 6), 
             Math.floor(minutes / 10));
 
         this.secondMinute = new NumberObject(
-            new Position([startPosition.x + (3.9 * width), startPosition.y]), 
+            new Position([startPosition.x + (3 * width + 20), startPosition.y]), 
             width, height,
             numericSpriteSheets,
             minutes % 10);
@@ -38,7 +38,9 @@ class TimeValue{
     }
 
     get imageObjects(){
-        return [this.doublePoint, this.firstHour, this.secondHour, this.firstMinute, this.secondMinute];
+        return [//this.doublePoint, 
+            this.firstHour, this.secondHour, 
+            this.firstMinute, this.secondMinute];
     }
 
     change(delay = 15){
