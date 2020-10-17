@@ -1,5 +1,5 @@
-const IMAGE_OFFSET_X = 0;
-const IMAGE_OFFSET_Y = 0;
+const IMAGE_OFFSET_X = -18;
+const IMAGE_OFFSET_Y = -2;
 const REVERT_SCALE_X = false;
 const REVERT_SCALE_Y = false;
 

@@ -4,11 +4,10 @@ function mainInvoke() {
     let display, buffer, imagesLoaded = 0;
     let loop, render, resize, onImageLoaded;
 
-    let mouseController, lockerController, musicController;
-    
     let scrollControllers;
+    let mouseController, lockerController;
 
-    let imageObjects = [], locker;
+    let imageObjects = [], dateValue, timeValue;
 
     let numericSpriteSheets = Range(10, 0, (index) => SpriteSheet.CreateDefault());
     let pointSpriteSheet = SpriteSheet.CreateDefault();
@@ -49,7 +48,7 @@ function mainInvoke() {
     onImageLoaded = function(event){
         if(++imagesLoaded == TOTAL_IMAGES){
             window.requestAnimationFrame(loop);
-            musicController = new Music();
+            new Music(dateValue, lockerController);
         }
     }
 
@@ -85,19 +84,15 @@ function mainInvoke() {
         1.05, 1.2
     );
 
-    let dateValue = new DateValue(scrollControllers,
+    dateValue = new DateValue(scrollControllers,
         new Position([20+18, 107+10]), 
         SPRITE_SIZE, SPRITE_SIZE,
         numericSpriteSheets, pointSpriteSheet);
 
-    let timeValue = new TimeValue(scrollControllers,
+    timeValue = new TimeValue(scrollControllers,
         new Position([104, 93*2 + 100]), 
         SPRITE_SIZE, SPRITE_SIZE,
         numericSpriteSheets, pointSpriteSheet);
-
-    
-
-    //let imageObjects = [rectangleObject, dateValue, timeValue]//, secondPointObject, doublePointsObject];
 
     imageObjects.push(rectangleObject);
     imageObjects.push(dateValue); 

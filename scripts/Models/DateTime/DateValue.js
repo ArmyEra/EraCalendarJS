@@ -73,6 +73,15 @@ class DateValue{
         }
     }
 
+    get ShiftedDate(){
+        var dateShifts = this.DateShifts;
+
+        return new Date()
+            .addDays(dateShifts.days)
+            .addMonths(dateShifts.months)
+            .addYears(dateShifts.years);
+    }
+
     change(delay = 15){
         this.imageObjects.forEach(imageObject => {
             imageObject.change(delay);
@@ -91,12 +100,7 @@ class DateValue{
     }
 
     updateIndex(callTimeout = false){
-        var dateShifts = this.DateShifts;
-
-        var dateTime = new Date()
-            .addDays(dateShifts.days)
-            .addMonths(dateShifts.months)
-            .addYears(dateShifts.years);
+        var dateTime = this.ShiftedDate;
 
         var days = dateTime.getDate();
         var months = dateTime.getMonth() + 1;

@@ -1,32 +1,40 @@
 class Music{
-    constructor(){
+    constructor(dateContainer, locker){
+        this.dateContainer = dateContainer;
+        this.locker = locker;
         window.addEventListener("mouseup", this.onMouseClick.bind(this));
-        setTimeout(this.soundClick.bind(this), MILISECONDS_IN_SECOND);
+        setTimeout(this.soundClick.bind(this, true), MILISECONDS_IN_SECOND);
     }
 
-    getDate(){
-        var today = new Date();
+    get FileNameFromDate(){
+        var today = this.dateContainer === null
+            ? new Date()
+            : this.dateContainer.ShiftedDate; 
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
 
-        today = `${dd}_${mm}_${yyyy}`;
+        console.log("TODO: rewrite all names in resources/sounds without year")
+        today = `${dd}_${mm}`;
         return today;
     }
 
-    soundClick()
+    soundClick(repeat = false)
     {
-         var name_file = this.getDate();
-         name_file = String(name_file);
-         console.log(name_file);
-         var scr = "resources/sounds/" + name_file + ".wav";
-         var audio2 = new Audio(scr);
-         audio2.play();
-        //setTimeout(this.soundClick.bind(this), SECONDS_IN_HOUR * MILISECONDS_IN_SECOND);
+        console.log("Click")
+        var scr = `resources/sounds/${this.FileNameFromDate}.wav`;
+         
+         var audio = new Audio(scr);
+         audio.play();
+
+         if(repeat)
+            setTimeout(this.soundClick.bind(this), SECONDS_IN_HOUR * MILISECONDS_IN_SECOND);
     }
 
     onMouseClick(e){
         if(e.button != 1)//central
+            return;
+
+        if(this.locker === null || !this.locker.State)
             return;
 
         this.soundClick();
